@@ -3,7 +3,7 @@
 DATOS: {{ loginForm.value | json }}
 VALIDACION: {{loginForm.valid}}
 <hr>
-<form [formGroup]="loginForm">
+<form [formGroup]="loginForm" (ngSubmit)="funIngresar()">
     <label for="corr">Ingrese Correo:</label>
     <input type="email" formControlName="email">
     <br>
@@ -11,4 +11,6 @@ VALIDACION: {{loginForm.valid}}
     <input type="password" formControlName="password">
     <br>
     <button type="submit" [disabled]="!loginForm.valid">Ingresar</button>
+    <button type="button" (click)="funPersonalizado()">Boton Personalizado</button>
+    <input type="reset" value="Limpiar">
 </form>
