@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -7,5 +10,33 @@ import { Component } from '@angular/core';
   styleUrl: './login.scss'
 })
 export class Login {
+
+  loginForm = new FormGroup({
+    email: new FormControl('', [Validators.email, Validators.required]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)])
+  });
+
+  router = inject(Router);
+  authService = inject(AuthService);
+
+  funIngresar(){
+
+    this.authService.funConectarConBackendExterno(this.loginForm.value).subscribe(
+      (res: any) => {
+        console.log(res);
+        this.router.navigate(["/admin/perfil"])
+
+      },
+      (error) => {
+
+        alert("Credenciales incorrectas...")
+      }
+    )
+    
+  }
+
+  funPersonalizado(){
+    alert("Personalizado...")
+  }
 
 }
