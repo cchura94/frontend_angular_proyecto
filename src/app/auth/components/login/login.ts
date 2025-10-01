@@ -24,7 +24,7 @@ export class Login {
     this.authService.funConectarConBackendExterno(this.loginForm.value).subscribe(
       (res: any) => {
         console.log(res);
-        this.router.navigate(["/admin/perfil"])
+        this.router.navigate(["/admin/usuario"])
 
       },
       (error) => {

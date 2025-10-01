@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { UsuarioService } from './../../core/services/usuario'
 
 @Component({
   selector: 'app-usuario',
@@ -6,6 +7,26 @@ import { Component } from '@angular/core';
   templateUrl: './usuario.html',
   styleUrl: './usuario.scss'
 })
-export class Usuario {
+export class Usuario implements OnInit {
+  
+  usuarioService = inject(UsuarioService);
+  usuarios: any[] = [];
+  
+  ngOnInit() {
+    this.funGetUsuarios()
+  }
+
+  funGetUsuarios(){
+    this.usuarioService.funListar().subscribe(
+      (res: any) => {
+        console.log(res)
+        this.usuarios = res;
+      },
+      (error: any) => {
+        alert("error al obtener usuarios");
+      }
+    );
+  }
+
 
 }
