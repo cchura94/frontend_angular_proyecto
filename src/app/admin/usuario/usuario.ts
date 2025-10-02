@@ -1,5 +1,14 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { UsuarioService } from './../../core/services/usuario'
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { UsuarioService } from './../../core/services/usuario.service'
+
+interface UserInterface{
+  id: string,
+  name: string,
+  email: string,
+  estado: boolean,
+  password?: string
+}
+
 
 @Component({
   selector: 'app-usuario',
@@ -10,7 +19,7 @@ import { UsuarioService } from './../../core/services/usuario'
 export class Usuario implements OnInit {
   
   usuarioService = inject(UsuarioService);
-  usuarios: any[] = [];
+  usuarios = signal<UserInterface[]>([]); // any[] = [];
   
   ngOnInit() {
     this.funGetUsuarios()
@@ -20,10 +29,10 @@ export class Usuario implements OnInit {
     this.usuarioService.funListar().subscribe(
       (res: any) => {
         console.log(res)
-        this.usuarios = res;
+        this.usuarios.set(res);
       },
       (error: any) => {
-        alert("error al obtener usuarios");
+        console.log(error);
       }
     );
   }
