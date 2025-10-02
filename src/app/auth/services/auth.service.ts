@@ -1,15 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  
-  urlBase = "https://laravue2.blumbit.net/back/public/api/v1/auth/login";
+
+  urlBase = environment.urlBackendApi;
   http = inject(HttpClient)
   
   funConectarConBackendExterno(credenciales: any){
-    return this.http.post(this.urlBase, credenciales)
+    return this.http.post(`${this.urlBase}/auth/login`, credenciales)
   }
 }

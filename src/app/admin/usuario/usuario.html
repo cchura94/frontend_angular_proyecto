@@ -1,1 +1,24 @@
-<p>usuario works!</p>
+<h1>Lista de Usuarios</h1>
+
+{{ usuarios() }}
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>EMAIL</th>
+            <th>NOMBRE</th>
+            <th>ESTADO</th>
+            <th>ACCION</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (user of usuarios(); track $index) {
+            <tr>
+                <td>{{ user.email }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.estado?'ACTIVO':'INACTIVO' }}</td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+</table>
