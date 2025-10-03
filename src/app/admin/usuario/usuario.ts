@@ -1,5 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { UsuarioService } from './../../core/services/usuario.service'
+import { FormsModule } from '@angular/forms';
 
 interface UserInterface{
   id: string,
@@ -12,7 +13,7 @@ interface UserInterface{
 
 @Component({
   selector: 'app-usuario',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './usuario.html',
   styleUrl: './usuario.scss'
 })
@@ -21,8 +22,26 @@ export class Usuario implements OnInit {
   usuarioService = inject(UsuarioService);
   usuarios = signal<UserInterface[]>([]); // any[] = [];
   
+  usuario = signal<UserInterface>({email: "", name: "", password: "", estado: true, id: "-"})
+
+  isModeEditar = signal(false);
+
   ngOnInit() {
     this.funGetUsuarios()
+  }
+
+  abrirModal(){
+    const modal = document.getElementById("crearUsuarioModal");
+    if(modal){
+      modal.classList.remove('hidden');
+    }
+  }
+
+  cerrarModal(){
+    const modal = document.getElementById("crearUsuarioModal");
+    if(modal){
+      modal.classList.add('hidden');
+    }
   }
 
   funGetUsuarios(){
@@ -35,6 +54,38 @@ export class Usuario implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  funGuardarUsuario(){
+    alert(this.isModeEditar());
+    if(this.isModeEditar()){
+      this.usuarioService.funModificar(this.usuario().id, this.usuario()).subscribe(
+        (res) => {
+          this.funGetUsuarios()
+        },
+        (error) => {
+          alert("Error al guardar usuario")
+        }
+      )
+    }else{
+
+      this.usuarioService.funGuardar(this.usuario()).subscribe(
+        (res) => {
+          console.log(res)
+          this.funGetUsuarios()
+        }
+      )
+    }
+
+
+    this.cerrarModal()
+  }
+
+  editarUsuario(user: any){
+    this.isModeEditar.set(true);
+    const {password, id, roles, estado, ...rest} = user;
+    this.usuario.set({...rest});
+    this.abrirModal();
   }
 
 
