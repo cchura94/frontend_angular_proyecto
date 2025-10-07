@@ -22,7 +22,7 @@ export class UsuarioService {
     return this.http.get(`${this.urlBase}/users/${id}`);
   }
 
-  funModificar(id: string, datos: any){
+  funModificar(id: string='-', datos: any){
     return this.http.patch(`${this.urlBase}/users/${id}`, datos);
   }
 

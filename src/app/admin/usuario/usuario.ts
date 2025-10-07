@@ -3,10 +3,10 @@ import { UsuarioService } from './../../core/services/usuario.service'
 import { FormsModule } from '@angular/forms';
 
 interface UserInterface{
-  id: string,
+  id?: string,
   name: string,
   email: string,
-  estado: boolean,
+  estado?: boolean,
   password?: string
 }
 
@@ -22,7 +22,7 @@ export class Usuario implements OnInit {
   usuarioService = inject(UsuarioService);
   usuarios = signal<UserInterface[]>([]); // any[] = [];
   
-  usuario = signal<UserInterface>({email: "", name: "", password: "", estado: true, id: "-"})
+  usuario = signal<UserInterface>({email: "", name: "", password: ""})
 
   isModeEditar = signal(false);
 
@@ -31,10 +31,16 @@ export class Usuario implements OnInit {
   }
 
   abrirModal(){
+    
     const modal = document.getElementById("crearUsuarioModal");
     if(modal){
       modal.classList.remove('hidden');
     }
+  }
+
+  abrirnuevoUsuarioModal(){
+    this.usuario.set({email: "", name: "", password: ""})
+    this.abrirModal()
   }
 
   cerrarModal(){
@@ -57,9 +63,10 @@ export class Usuario implements OnInit {
   }
 
   funGuardarUsuario(){
-    alert(this.isModeEditar());
+    
     if(this.isModeEditar()){
-      this.usuarioService.funModificar(this.usuario().id, this.usuario()).subscribe(
+      const {id , ...rest} = this.usuario()
+      this.usuarioService.funModificar(this.usuario().id, rest).subscribe(
         (res) => {
           this.funGetUsuarios()
         },
@@ -77,13 +84,16 @@ export class Usuario implements OnInit {
       )
     }
 
+    this.usuario.set({email: '', name: '', password: ''})
+
 
     this.cerrarModal()
   }
 
   editarUsuario(user: any){
+    console.log(user);
     this.isModeEditar.set(true);
-    const {password, id, roles, estado, ...rest} = user;
+    const {password, roles, estado, ...rest} = user;
     this.usuario.set({...rest});
     this.abrirModal();
   }
