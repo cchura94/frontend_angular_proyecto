@@ -5,6 +5,7 @@ import { Nosotros } from './web/nosotros/nosotros';
 import { Perfil } from './admin/perfil/perfil';
 import { Usuario } from './admin/usuario/usuario';
 import { SitioLayout } from './layout/sitio-layout/sitio-layout';
+import { AppLayout } from './layout/component/app.layout';
 
 export const routes: Routes = [
     {
@@ -29,13 +30,19 @@ export const routes: Routes = [
             },
         ]
     },
-
     {
-        path: 'admin/perfil',
-        component: Perfil
-    },
-    {
-        path: 'admin/usuario',
-        component: Usuario
+        path: 'admin',
+        component: AppLayout,
+        children: [
+            {
+                path: 'perfil',
+                component: Perfil
+            },
+            {
+                path: 'usuario',
+                component: Usuario
+            }
+        ]
     }
+
 ];
