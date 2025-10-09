@@ -39,22 +39,22 @@ export class AppMenu {
                     {
                         label: 'Categoria',
                         icon: 'pi pi-fw pi-globe',
-                        routerLink: ['/admin/categoria']
+                        routerLink: ['/admin/inventario/categoria']
                     },
                     {
                         label: 'Producto',
                         icon: 'pi pi-fw pi-pencil',
-                        routerLink: ['/admin/producto']
+                        routerLink: ['/admin/inventario/producto']
                     },
                     {
                         label: 'Almacen',
                         icon: 'pi pi-fw pi-exclamation-circle',
-                        routerLink: ['/admin/almacen']
+                        routerLink: ['/admin/inventario/almacen']
                     },
                     {
                         label: 'Sucursal',
                         icon: 'pi pi-fw pi-circle-off',
-                        routerLink: ['/admin/sucursal']
+                        routerLink: ['/admin/inventario/sucursal']
                     }
                 ]
             },
