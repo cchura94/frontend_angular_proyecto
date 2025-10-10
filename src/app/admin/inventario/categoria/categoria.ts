@@ -29,6 +29,7 @@ export class Categoria {
   categorias= signal<any[]>([]);
   categoriaService = inject(CategoriaService);
   visible= signal(false);
+  categoriaid_selected = signal(0);
 
 
   
@@ -54,18 +55,38 @@ export class Categoria {
   }
 
   funGuardarCategoria(){
-    this.categoriaService.funGuardar(this.categoriaForm.value).subscribe(
-      (res) => {
-        this.funGetCategorias();
 
-        this.visible.set(false);
-        this.categoriaForm.reset();
-      }
-    )
+    if(this.categoriaid_selected() > 0){
+      this.categoriaService.funModificar(this.categoriaid_selected(), this.categoriaForm.value).subscribe(
+        (res) => {
+          this.funGetCategorias();
+          this.visible.set(false);
+          this.categoriaForm.reset();
+        },
+        (error) => {
+            console.log(error);
+        }
+      )
+    }else{
+      this.categoriaService.funGuardar(this.categoriaForm.value).subscribe(
+        (res) => {
+          this.funGetCategorias();
+  
+          this.visible.set(false);
+          this.categoriaForm.reset();
+        },
+        (error) => {
+            console.log(error);
+        }
+      )
+
+    }
   }
 
   editarCategoria(cat: CategoriaInterface){
     console.log(cat);
+    let categoria_id: number = cat.id || -1;
+    this.categoriaid_selected.set(categoria_id);
     this.categoriaForm.setValue({nombre: cat.nombre, descripcion: cat.descripcion + ''}) 
     
 
@@ -74,7 +95,13 @@ export class Categoria {
   }
   eliminarCategoria(cat: CategoriaInterface){
     if(confirm("¿Está seguro de eliminar la categoria?")){
-
+      let categoria_id: number = cat.id || -1;
+      this.categoriaService.funEliminar(categoria_id).subscribe(
+        (res) => {
+          alert("Categoria Eliminada");
+          this.funGetCategorias();
+        }
+      )
     }
   } 
 
