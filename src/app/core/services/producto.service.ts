@@ -28,4 +28,11 @@ export class ProductoService {
   funEliminar(id: number){
     return this.http.delete(`${this.urlBase}/producto/${id}`);
   }
+
+  actualizarImagen(prod: any, formData: any){
+    console.log("*****: ", prod);
+    return this.http.post(`${this.urlBase}/producto/${prod.id}/actualizar-imagen`, formData);
+
+  }
+  
 }

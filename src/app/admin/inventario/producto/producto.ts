@@ -12,10 +12,14 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { CategoriaService } from '../../../core/services/categoria.service';
+import { FileUploadModule } from 'primeng/fileupload';
+import { ImageModule } from 'primeng/image';
+import { environment } from "./../../../../environments/environment.development"
+
 
 @Component({
   selector: 'app-producto',
-  imports: [ToastModule, ToolbarModule, ButtonModule, TableModule, CommonModule, DialogModule, ReactiveFormsModule, RadioButtonModule, InputNumberModule, InputTextModule, TextareaModule],
+  imports: [ToastModule, ToolbarModule, ButtonModule, TableModule, CommonModule, DialogModule, ReactiveFormsModule, RadioButtonModule, InputNumberModule, InputTextModule, TextareaModule, FileUploadModule, ImageModule],
   templateUrl: './producto.html',
   styleUrl: './producto.scss',
 })
@@ -24,6 +28,8 @@ export class Producto {
   constructor(){
     this.getProductos()
     this.cargarCategorias()
+
+    
   }
   productos = signal([]);
   productDialog = signal(false);
@@ -32,6 +38,9 @@ export class Producto {
   totalRecords= signal(0)
   loading = signal(false)
   categorias = signal([])
+  productImagenDialog = signal(false);
+  urlBackendApi = signal(environment.urlBackendApi)
+  
 
   productoForm = new FormGroup({
     nombre: new FormControl('', [Validators.required]),
@@ -87,6 +96,30 @@ export class Producto {
       }
     )
     this.loading.set(false);
+  }
+
+  funSubirImagen(event: any){
+    const imagen = event.files[0];
+    console.log(this.producto())
+
+    let formData = new FormData();
+
+    formData.append("imagen", imagen);
+    this.productoService.actualizarImagen(this.producto(), formData).subscribe(
+      (res: any) => {
+        // this.hideDialogImage();
+        this.productImagenDialog.set(false);
+        this.getProductos()
+      }
+    )
+
+  }
+
+  editDialogImagen(prod: any){
+    this.producto.set(prod);
+
+    this.productImagenDialog.set(true);
+
   }
 
   editProduct(pod:any){

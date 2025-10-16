@@ -34,9 +34,9 @@
                 <th>Precio Venta</th>
 
 
-                <th>Image</th>
+                <th>Imagen</th>
 
-                <th pSortableColumn="category" style="min-width:10rem">
+                <th pSortableColumn="category" style="min-width:6rem">
                     <div class="flex items-center gap-2">
                         Categoria
                         <p-sortIcon field="category" />
@@ -55,11 +55,22 @@
                 <td style="min-width: 6rem">{{ product.precio_venta_actual }}</td>
 
                 <td>
-                    <img [src]="'http://localhost:3000/' + product.imagen" [alt]="product.imagen" style="width: 64px"
-                        class="rounded" />
+                    @if (product.imagen) {
+                        <p-image [src]="`${urlBackendApi()}/${product.imagen}`"  width="80" [alt]="product.imagen" [preview]="true" />
+
+                        <!--
+                        <img [src]="`${urlBackendApi()}/${product.imagen}`" [alt]="product.imagen" style="width: 64px"
+                            class="rounded" />
+                            -->
+
+                    }
                 </td>
                 <td>{{ product.categoria }}</td>
                 <td>
+
+                    <p-button icon="pi pi-image" class="mr-2" [rounded]="true" [outlined]="true"
+                        (click)="editDialogImagen(product)" />
+
                     <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true"
                         (click)="editProduct(product)" />
                     <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true"
@@ -124,6 +135,25 @@
         </ng-template>
     </p-dialog>
 
+    <p-dialog [(visible)]="productImagenDialog" [style]="{ width: '450px' }" header="Actualizar Imagen" [modal]="true">
+        <ng-template #content>
+
+            <div class="flex flex-col gap-6" >
+                <div>
+                    <p-fileupload name="demo[]" (uploadHandler)="funSubirImagen($event)" [customUpload]="true" accept="image/*" maxFileSize="1000000" mode="advanced">
+                        <ng-template #empty>
+                            <div>Arrastrar y soltar aqui para subir una imagen.</div>
+                        </ng-template>
+                    </p-fileupload>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #footer>
+            <p-button label="Cancelar" icon="pi pi-times" text />
+            <p-button label="Guardar Imagen" icon="pi pi-check" (click) ="funGuardarProducto()" />
+        </ng-template>
+    </p-dialog>
 
 
 </div>
