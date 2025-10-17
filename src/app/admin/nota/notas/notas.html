@@ -1,0 +1,80 @@
+<p>notas works!</p>
+<div class="card">
+    <h1>Gestión Notas</h1>
+    <div class="card flex justify-center">
+        
+        <p-button label="Compras" icon="pi pi-check" iconPos="right" (click)="funCompras()" />
+        <p-button label="Ventas" icon="pi pi-check" iconPos="right" (click)="funVentas()" />
+
+    </div>
+    <p-table [value]="notas()" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template #header>
+            <tr>
+                <th>ID</th>
+                <th>TIPO NOTA</th>
+                <th>FECHA</th>
+                <th>TOTAL</th>
+                <th>CLIENTE</th>
+                <th>ATENDIDO POR</th>
+                <th>PRODUCTOS</th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-nota>
+            <tr>
+                <td>{{ nota.id }}</td>
+                <td>{{ nota.tipo_nota }}</td>
+                <td>{{ nota.fecha }}</td>
+                <td>{{ nota.total_calculado }}</td>
+                <td>
+                    {{ nota.cliente.tipo }}: {{ nota.cliente.correo }}
+                </td>
+                <td>
+                    {{nota.user.email}}
+                </td>
+                <td>
+                    <p-button (click)="showDialogNotaMovimientos(nota)" label="VER PRODUCTOS" />
+
+                    {{nota.movimientos}}
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+
+    <p-dialog header="Detalle Productos" [modal]="true" [(visible)]="visibleNotasMovimientos" [style]="{ width: '70rem' }">
+        <span class="p-text-secondary block mb-8">Detalle Movimiento de Productos.</span>
+        <h1>RECIBO: #{{detalle_nota().id}}</h1>
+        <h4>CLIENTE/PROVEEDOR: {{ detalle_nota().cliente.tipo }}: {{ detalle_nota().cliente.correo }}</h4>
+        <div>
+            <p-table [value]="detalle_nota().movimientos" [tableStyle]="{ 'min-width': '50rem' }">
+                <ng-template #header>
+                    <tr>
+                        <th>ID</th>
+                        <th>PRODUCTO</th>
+                        <th>ALMACEN</th>
+                        <th>TIPO</th>
+                        <th>C</th>
+                        <th>PRECIO COMPRA</th>
+                        <th>PRECIO VENTA</th>
+                    </tr>
+                </ng-template>
+                <ng-template #body let-mov>
+                    <tr>
+                        <td>{{ mov.id }}</td>
+                        <td>{{ mov.producto.nombre }}</td>
+                        <td>{{ mov.almacen.nombre }}</td>
+                        <td>{{ mov.tipo_movimiento }}</td>
+                        <td>{{ mov.cantidad }}</td>
+                        <td>{{ mov.precio_unitario_compra }}</td>
+                        <td>{{ mov.precio_unitario_venta }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <div class="flex justify-end gap-2">
+            <p-button label="Cerrar" severity="secondary" (click)="visibleNotasMovimientos.set(false)" />
+        </div>
+    </p-dialog>
+    
+</div>

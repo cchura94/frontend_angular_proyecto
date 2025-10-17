@@ -1,7 +1,7 @@
 <div class="card">
-    <h1>Gestión Almacen</h1>
+    <h1>Gestión Clientes</h1>
 
-    <p-table [value]="almacenes()" [tableStyle]="{ 'min-width': '50rem' }">
+    <p-table [value]="clientes()" [tableStyle]="{ 'min-width': '50rem' }">
         <ng-template #header>
             <tr>
                 <th>ID</th>
@@ -10,12 +10,12 @@
                 <th>SUCURSAL</th>
             </tr>
         </ng-template>
-        <ng-template #body let-alm>
+        <ng-template #body let-clie>
             <tr>
-                <td>{{ alm.id }}</td>
-                <td>{{ alm.nombre }}</td>
-                <td>{{ alm.codigo }}</td>
-                <td>{{ alm.sucursal.nombre }}</td>
+                <td>{{ clie.id }}</td>
+                <td>{{ clie.nombre }}</td>
+                <td>{{ clie.codigo }}</td>
+                <td>{{ clie.nombre }}</td>
             </tr>
         </ng-template>
     </p-table>
