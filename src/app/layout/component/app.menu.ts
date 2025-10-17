@@ -69,24 +69,19 @@ export class AppMenu {
                         routerLink: ['/admin/cliente']
                     },
                     {
-                        label: 'Compra',
-                        icon: 'pi pi-fw pi-pencil',
-                        routerLink: ['/admin/nota/compra']
-                    },
-                    {
-                        label: 'Nueva Compra',
-                        icon: 'pi pi-fw pi-circle-off',
-                        routerLink: ['/admin/nota/compra/nuevo']
-                    },
-                    {
-                        label: 'Venta',
+                        label: 'Compras y Ventas',
                         icon: 'pi pi-fw pi-exclamation-circle',
-                        routerLink: ['/admin/nota/venta']
+                        routerLink: ['/admin/nota']
                     },
                     {
                         label: 'Nueva Venta',
                         icon: 'pi pi-fw pi-circle-off',
                         routerLink: ['/admin/nota/venta/nuevo']
+                    },
+                    {
+                        label: 'Nueva Compra',
+                        icon: 'pi pi-fw pi-circle-off',
+                        routerLink: ['/admin/nota/compra/nuevo']
                     },
                 ]
             }

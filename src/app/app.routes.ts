@@ -12,6 +12,7 @@ import { Producto } from './admin/inventario/producto/producto';
 import { Almacen } from './admin/inventario/almacen/almacen';
 import { Sucursal } from './admin/inventario/sucursal/sucursal';
 import { Cliente } from './admin/cliente/cliente';
+import { Notas } from './admin/nota/notas/notas';
 
 export const routes: Routes = [
     {
@@ -74,6 +75,10 @@ export const routes: Routes = [
             {
                 path: 'cliente',
                 component: Cliente
+            },
+            {
+                path: 'nota',
+                component: Notas
             },
         ]
     }
