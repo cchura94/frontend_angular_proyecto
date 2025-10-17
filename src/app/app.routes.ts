@@ -11,6 +11,7 @@ import { Categoria } from './admin/inventario/categoria/categoria';
 import { Producto } from './admin/inventario/producto/producto';
 import { Almacen } from './admin/inventario/almacen/almacen';
 import { Sucursal } from './admin/inventario/sucursal/sucursal';
+import { Cliente } from './admin/cliente/cliente';
 
 export const routes: Routes = [
     {
@@ -69,7 +70,11 @@ export const routes: Routes = [
                     }
                 ]
 
-            }
+            },
+            {
+                path: 'cliente',
+                component: Cliente
+            },
         ]
     }
 

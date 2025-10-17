@@ -1,0 +1,24 @@
+<div class="card">
+    <h1>Gestión Clientes</h1>
+
+    <p-table [value]="clientes()" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template #header>
+            <tr>
+                <th>ID</th>
+                <th>NOMBRE</th>
+                <th>CODIGO</th>
+                <th>SUCURSAL</th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-clie>
+            <tr>
+                <td>{{ clie.id }}</td>
+                <td>{{ clie.nombre }}</td>
+                <td>{{ clie.codigo }}</td>
+                <td>{{ clie.nombre }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    
+</div>
